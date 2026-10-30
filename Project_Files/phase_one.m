@@ -3,8 +3,10 @@
 
 clear; clc; close all;  clear sound;
 
-files = {'Trimmed_Audio/acoustiangel.wav', 'Trimmed_Audio/bogenseeber.wav', ...
-         'Trimmed_Audio/neilraouf.wav', 'Trimmed_Audio/richardfosterpersonal.wav'};
+files = {'Trimmed_Audio/speech_house_memories.wav', ...
+         'Trimmed_Audio/speech_world_cup_interview.wav', ...
+         'Trimmed_Audio/speech_lean_management.wav', ...
+         'Trimmed_Audio/music_treasure_island.wav'};
 
 % Apply the same processing routine to every sound file
 for k = 1:numel(files)
@@ -39,8 +41,8 @@ function [y, Fs] = processSound(filename)
     end    
 
     %% 3.3 Play the sound
-    sound(y, Fs);
-    pause(length(y) / Fs + 0.5);
+    %sound(y, Fs);
+    %pause(length(y) / Fs + 0.5);
 
     %% 3.4 Write the sound to a new file
     [~, name, ~] = fileparts(filename);
@@ -69,8 +71,8 @@ function [y, Fs] = processSound(filename)
     t = (0:N-1) / Fs;   
     x = cos(2*pi*f*t);
 
-    sound(x, Fs);
-    pause(N / Fs + 0.5);
+    %sound(x, Fs);
+    %pause(N / Fs + 0.5);
 
     T   = 1 / f;      
     idx = t <= 2*T;          
