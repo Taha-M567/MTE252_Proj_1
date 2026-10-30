@@ -1,4 +1,4 @@
-Audio clips used by `phase_one.m` are in `Trimmed_Audio`.
+Audio clips are in the same folder as `phase_one.m`.
 
 Names use lowercase `<type>_<topic>.wav`, with underscores between words.
 
