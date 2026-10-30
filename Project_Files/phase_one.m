@@ -47,8 +47,8 @@ function [y, Fs] = processSound(filename)
     end    
 
     %% 3.3 Play the sound
-    %sound(y, Fs);
-    %pause(length(y) / Fs + 0.5);
+    sound(y, Fs);
+    pause(length(y) / Fs + 0.5);
 
     %% 3.4 Write the sound to a new file
     [~, name, ~] = fileparts(filename);
@@ -77,8 +77,8 @@ function [y, Fs] = processSound(filename)
     t = (0:N-1) / Fs;   
     x = cos(2*pi*f*t);
 
-    %sound(x, Fs);
-    %pause(N / Fs + 0.5);
+    sound(x, Fs);
+    pause(N / Fs + 0.5);
 
     T   = 1 / f;      
     idx = t <= 2*T;          
