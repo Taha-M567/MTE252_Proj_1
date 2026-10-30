@@ -9,4 +9,4 @@ Names use lowercase `<type>_<topic>.wav`, with underscores between words.
 | `speech_lean_management.wav` | 28.12 s | Speech about lean management, Japan, and management tools | `neilraouf.wav` |
 | `music_treasure_island.wav` | 25.55 s | Song with backing music; source title is "Treasure Island - with backing" | `richardfosterpersonal.mp3` |
 
-Topic labels come from recognized speech or embedded source metadata. Original recordings retain their source filenames. All trimmed clips are at least 25 seconds and under 30 seconds.
+Topic labels come from recognized speech or embedded source metadata. Original-source filenames are listed for reference; the full-length recordings have been removed. All trimmed clips are at least 25 seconds and under 30 seconds.
