@@ -7,60 +7,20 @@ Channel 5:   894.43 Hz to  1546.79 Hz
 Channel 6:  1546.79 Hz to  2674.96 Hz
 Channel 7:  2674.96 Hz to  4625.98 Hz
 Channel 8:  4625.98 Hz to  8000.00 Hz
-[Warning: Missing WAV file: speech_house_memories.wav. Skipping.]
-[> In MTE252_Phase2 (line 89)]
-[Warning: Missing WAV file: speech_world_cup_interview.wav. Skipping.]
-[> In MTE252_Phase2 (line 89)]
-[Warning: Missing WAV file: speech_lean_management.wav. Skipping.]
-[> In MTE252_Phase2 (line 89)]
-[Warning: Missing WAV file: music_treasure_island.wav. Skipping.]
-[> In MTE252_Phase2 (line 89)]
+Processed speech_house_memories.mp3           (880544 samples, 27.52 sec); Task 6 16.207-16.287s; Task 9 15.997-16.497s
+Processed speech_world_cup_interview.mp3      (941697 samples, 29.43 sec); Task 6 24.718-24.798s; Task 9 24.508-25.008s
+Processed speech_lean_management.mp3          (900512 samples, 28.14 sec); Task 6 8.108-8.188s; Task 9 7.898-8.398s
+Processed music_treasure_island.mp3           (818817 samples, 25.59 sec); Task 6 11.961-12.041s; Task 9 11.751-12.251s
 
-Completed Phase 2 processing. Plots saved in: Phase2_Plots
-INPUT speech_house_memories: Fs=48000, channels=2, duration=27.517s
-INPUT speech_world_cup_interview: Fs=44100, channels=2, duration=29.428s
-INPUT speech_lean_management: Fs=48000, channels=1, duration=28.141s
-INPUT music_treasure_island: Fs=44100, channels=2, duration=25.588s
-Phase 2: 8 channels; processing Fs = 32000 Hz
-Channel 1:   100.00 Hz to   172.94 Hz
-Channel 2:   172.94 Hz to   299.07 Hz
-Channel 3:   299.07 Hz to   517.20 Hz
-Channel 4:   517.20 Hz to   894.43 Hz
-Channel 5:   894.43 Hz to  1546.79 Hz
-Channel 6:  1546.79 Hz to  2674.96 Hz
-Channel 7:  2674.96 Hz to  4625.98 Hz
-Channel 8:  4625.98 Hz to  8000.00 Hz
-Processed speech_house_memories.wav           (880544 samples, 27.52 sec)
-Processed speech_world_cup_interview.wav      (941697 samples, 29.43 sec)
-Processed speech_lean_management.wav          (900512 samples, 28.14 sec)
-Processed music_treasure_island.wav           (818817 samples, 25.59 sec)
-
-Completed Phase 2 processing. Plots saved in: Phase2_Plots
-FILTER 1: 100.000-172.936 Hz, edge gains -3.010300/-3.010300 dB
-FILTER 2: 172.936-299.070 Hz, edge gains -3.010300/-3.010300 dB
-FILTER 3: 299.070-517.200 Hz, edge gains -3.010300/-3.010300 dB
-FILTER 4: 517.200-894.427 Hz, edge gains -3.010300/-3.010300 dB
-FILTER 5: 894.427-1546.790 Hz, edge gains -3.010300/-3.010300 dB
-FILTER 6: 1546.790-2674.961 Hz, edge gains -3.010300/-3.010300 dB
-FILTER 7: 2674.961-4625.980 Hz, edge gains -3.010300/-3.010300 dB
-FILTER 8: 4625.980-8000.000 Hz, edge gains -3.010300/-3.010300 dB
-LOWPASS: DC -0.000000 dB, 400Hz -3.010300 dB, 2000Hz -56.350296 dB
-SIGNAL speech_house_memories ch1: first80ms/full peak=0.00001, envelope/rectified derivative RMS=0.79264, min envelope=-0.000115097
-SIGNAL speech_house_memories ch8: first80ms/full peak=0.00004, envelope/rectified derivative RMS=0.01442, min envelope=-1.314e-05
-SIGNAL speech_world_cup_interview ch1: first80ms/full peak=0.00000, envelope/rectified derivative RMS=0.72753, min envelope=-0.00124309
-SIGNAL speech_world_cup_interview ch8: first80ms/full peak=0.00000, envelope/rectified derivative RMS=0.01387, min envelope=-1.72998e-07
-SIGNAL speech_lean_management ch1: first80ms/full peak=0.00342, envelope/rectified derivative RMS=0.74685, min envelope=-0.000455388
-SIGNAL speech_lean_management ch8: first80ms/full peak=0.00235, envelope/rectified derivative RMS=0.02208, min envelope=-9.14951e-05
-SIGNAL music_treasure_island ch1: first80ms/full peak=0.00615, envelope/rectified derivative RMS=0.80634, min envelope=-0.00153198
-SIGNAL music_treasure_island ch8: first80ms/full peak=0.01025, envelope/rectified derivative RMS=0.01411, min envelope=-1.4998e-07
-FIGURE envelope_lowpass_response.png: 875x656 pixels
-FIGURE filter_bank_response.png: 875x656 pixels
-FIGURE music_treasure_island_task6_bandpass.png: 875x656 pixels
-FIGURE music_treasure_island_task9_envelopes.png: 875x656 pixels
-FIGURE speech_house_memories_task6_bandpass.png: 875x656 pixels
-FIGURE speech_house_memories_task9_envelopes.png: 875x656 pixels
-FIGURE speech_lean_management_task6_bandpass.png: 875x656 pixels
-FIGURE speech_lean_management_task9_envelopes.png: 875x656 pixels
-FIGURE speech_world_cup_interview_task6_bandpass.png: 875x656 pixels
-FIGURE speech_world_cup_interview_task9_envelopes.png: 875x656 pixels
-PASS: ten nonblank figures; all eight channels finite/nonzero for four inputs; stable filters with correct cutoffs.
+Completed Phase 2 processing. Plots saved in: H:\Hard_Repos\MTE252_Proj_1\Project_Files\Phase2_Plots
+FIGURE envelope_lowpass_response.png: 1307x1050 pixels
+FIGURE filter_bank_response.png: 1307x1050 pixels
+FIGURE music_treasure_island_task6_bandpass.png: 1327x1097 pixels
+FIGURE music_treasure_island_task9_envelopes.png: 1326x1097 pixels
+FIGURE speech_house_memories_task6_bandpass.png: 1327x1097 pixels
+FIGURE speech_house_memories_task9_envelopes.png: 1326x1097 pixels
+FIGURE speech_lean_management_task6_bandpass.png: 1333x1097 pixels
+FIGURE speech_lean_management_task9_envelopes.png: 1321x1097 pixels
+FIGURE speech_world_cup_interview_task6_bandpass.png: 1321x1097 pixels
+FIGURE speech_world_cup_interview_task9_envelopes.png: 1318x1097 pixels
+PASS: all ten figures contain finite/nonzero plotted curves; paths work from TEMP; filters stable/correct; stereo sum correct; active windows valid; missing input fails before output creation.
