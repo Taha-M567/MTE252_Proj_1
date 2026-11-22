@@ -25,7 +25,6 @@ plotDuration = 0.08;
 envelopeDuration = 0.5;
 channels = [1, N];
 figurePosition = [100, 100, 1000, 750];
-outputDir = fullfile(scriptFolder, 'Phase2_Plots');
 
 if targetFs <= 2*maxFreq
     error('targetFs must be greater than 2*maxFreq for bandpass design.');
@@ -35,9 +34,6 @@ for fileIndex = 1:numel(files)
     if ~isfile(filename)
         error('Missing MP3 file: %s.', filename);
     end
-end
-if ~exist(outputDir, 'dir')
-    mkdir(outputDir);
 end
 
 %% Task 4: Design Bandpass Filter Bank
@@ -83,7 +79,7 @@ for fileIndex = 1:numel(files)
     [~, startSample] = max(windowEnergy(1:numSamples-shown+1));
     plotSamples = startSample:startSample+shown-1;
     [~, baseName] = fileparts(filename);
-    fig = figure('Visible', 'off', 'Color', 'w', 'Position', figurePosition);
+    figure('Color', 'w', 'Position', figurePosition);
     for channelIndex = 1:numel(channels)
         k = channels(channelIndex);
         subplot(2, 1, channelIndex);
@@ -92,8 +88,6 @@ for fileIndex = 1:numel(files)
         title(sprintf('Channel %d (%.1f - %.1f Hz)', k, bandEdges(k), bandEdges(k+1)));
     end
     sgtitle(sprintf('Task 6: bandpass outputs | %s', strrep(baseName, '_', ' ')));
-    exportgraphics(fig, fullfile(outputDir, [baseName '_task6_bandpass.png']), 'Resolution', 150);
-    close(fig);
 
     %% Task 7: Full-Wave Rectification
     rectified = abs(bandpassed);
@@ -111,7 +105,7 @@ for fileIndex = 1:numel(files)
     envelopeStart = max(1, min(envelopeStart, numSamples-envelopeShown+1));
     envelopeSamples = envelopeStart:envelopeStart+envelopeShown-1;
 
-    fig = figure('Visible', 'off', 'Color', 'w', 'Position', figurePosition);
+    figure('Color', 'w', 'Position', figurePosition);
     for channelIndex = 1:numel(channels)
         k = channels(channelIndex);
         subplot(2, 1, channelIndex);
@@ -122,14 +116,12 @@ for fileIndex = 1:numel(files)
         legend('Rectified', sprintf('%g Hz lowpass output', envelopeCutoff), 'Location', 'best');
     end
     sgtitle(sprintf('Task 9: extracted envelopes | %s', strrep(baseName, '_', ' ')));
-    exportgraphics(fig, fullfile(outputDir, [baseName '_task9_envelopes.png']), 'Resolution', 150);
-    close(fig);
 
     fprintf('Processed %s\n', files{fileIndex});
 end
 
 %% Additional: Filter Frequency Responses
-fig = figure('Visible', 'off', 'Color', 'w', 'Position', figurePosition);
+figure('Color', 'w', 'Position', figurePosition);
 hold on;
 for k = 1:N
     [H, freqHz] = freqz(bpB{k}, bpA{k}, 8192, targetFs);
@@ -140,16 +132,12 @@ xlim([0, maxFreq]); ylim([-80, 5]);
 xlabel('Frequency (Hz)'); ylabel('Magnitude (dB)');
 title(sprintf('Phase 2: %d-channel Butterworth bandpass filter bank', N));
 legend(compose('Ch %d', 1:N), 'Location', 'best');
-exportgraphics(fig, fullfile(outputDir, 'filter_bank_response.png'), 'Resolution', 150);
-close(fig);
 
 [Hlp, flp] = freqz(lpB, lpA, 8192, targetFs);
-fig = figure('Visible', 'off', 'Color', 'w', 'Position', figurePosition);
+figure('Color', 'w', 'Position', figurePosition);
 plot(flp, 20*log10(max(abs(Hlp), 1e-10)), 'LineWidth', 1.3);
 grid on; xlim([0, 2000]); ylim([-80, 5]);
 xlabel('Frequency (Hz)'); ylabel('Magnitude (dB)');
 title(sprintf('Phase 2: %g Hz Butterworth envelope lowpass filter', envelopeCutoff));
-exportgraphics(fig, fullfile(outputDir, 'envelope_lowpass_response.png'), 'Resolution', 150);
-close(fig);
 
-fprintf('\nCompleted Phase 2 processing. Plots saved in: %s\n', outputDir);
+fprintf('\nCompleted Phase 2 processing. Figures are open for viewing and manual saving.\n');
