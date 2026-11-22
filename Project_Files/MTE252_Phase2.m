@@ -121,7 +121,7 @@ for fileIndex = 1:numel(files)
     envelopeStart = max(1, min(envelopeStart, numSamples-envelopeShown+1));
     envelopeSamples = envelopeStart:envelopeStart+envelopeShown-1;
 
-    figure('Color', 'w', 'Position', figurePosition);
+    fig = figure('Color', 'w', 'Position', figurePosition);
     for channelIndex = 1:numel(channels)
         k = channels(channelIndex);
         subplot(2, 1, channelIndex);
