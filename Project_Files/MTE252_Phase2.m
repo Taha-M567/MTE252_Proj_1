@@ -26,7 +26,6 @@ plotDuration = 0.08;
 envelopeDuration = 0.5;
 channels = [1, N];
 figurePosition = [100, 100, 1000, 750];
-outputDir = fullfile(scriptFolder, 'Phase2_Plots_16kHz');
 
 if targetFs < 2*maxFreq
     error('targetFs must be at least 2*maxFreq for the final highpass channel.');
@@ -36,10 +35,6 @@ for fileIndex = 1:numel(files)
     if ~isfile(filename)
         error('Missing MP3 file: %s.', filename);
     end
-end
-
-if ~exist(outputDir, 'dir')
-    mkdir(outputDir);
 end
 
 %% Task 4: Design Bandpass Filter Bank
@@ -103,7 +98,6 @@ for fileIndex = 1:numel(files)
         end
     end
     sgtitle(sprintf('Task 6: filtered outputs | %s', strrep(baseName, '_', ' ')));
-    exportgraphics(fig, fullfile(outputDir, [baseName '_task6_16khz.png']), 'Resolution', 150);
 
     %% Task 7: Full-Wave Rectification
     rectified = abs(bandpassed);
@@ -136,7 +130,6 @@ for fileIndex = 1:numel(files)
         legend('Rectified', sprintf('%g Hz lowpass output', envelopeCutoff), 'Location', 'best');
     end
     sgtitle(sprintf('Task 9: extracted envelopes | %s', strrep(baseName, '_', ' ')));
-    exportgraphics(fig, fullfile(outputDir, [baseName '_task9_16khz.png']), 'Resolution', 150);
 
     fprintf('Processed %s\n', files{fileIndex});
 end
@@ -153,7 +146,6 @@ xlim([0, maxFreq]); ylim([-80, 5]);
 xlabel('Frequency (Hz)'); ylabel('Magnitude (dB)');
 title(sprintf('Phase 2: %d-channel Butterworth bank (7 bandpass + 1 highpass)', N));
 legend(compose('Ch %d', 1:N), 'Location', 'best');
-exportgraphics(fig, fullfile(outputDir, 'filter_bank_response_16khz.png'), 'Resolution', 150);
 
 [Hlp, flp] = freqz(lpB, lpA, 8192, targetFs);
 fig = figure('Color', 'w', 'Position', figurePosition);
@@ -161,6 +153,5 @@ plot(flp, 20*log10(max(abs(Hlp), 1e-10)), 'LineWidth', 1.3);
 grid on; xlim([0, 2000]); ylim([-80, 5]);
 xlabel('Frequency (Hz)'); ylabel('Magnitude (dB)');
 title(sprintf('Phase 2: %g Hz Butterworth envelope lowpass filter', envelopeCutoff));
-exportgraphics(fig, fullfile(outputDir, 'envelope_lowpass_response_16khz.png'), 'Resolution', 150);
 
-fprintf('\nCompleted Phase 2 processing. Figures saved in %s\n', outputDir);
+fprintf('\nCompleted Phase 2 processing. Figures are open for viewing.\n');
