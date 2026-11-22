@@ -1,6 +1,7 @@
 % MTE 252 Project - Phase 2: Filter Design (Tasks 4-9)
 % Emad Rahman, Taha Malik, Saahib Lall, Abdulaziz Abbas
 % Requires Signal Processing Toolbox.
+% 16 kHz: channels 1-7 are bandpass, channel 8 is highpass to Nyquist.
 
 %% Setup and Audio Files
 clear; clc; close all;
@@ -14,7 +15,7 @@ files = {
     'music_treasure_island.mp3'
 };
 
-targetFs = 32000;
+targetFs = 16000;
 N = 8;
 minFreq = 100;
 maxFreq = 8000;
@@ -26,8 +27,8 @@ envelopeDuration = 0.5;
 channels = [1, N];
 figurePosition = [100, 100, 1000, 750];
 
-if targetFs <= 2*maxFreq
-    error('targetFs must be greater than 2*maxFreq for bandpass design.');
+if targetFs < 2*maxFreq
+    error('targetFs must be at least 2*maxFreq for the final highpass channel.');
 end
 for fileIndex = 1:numel(files)
     filename = fullfile(audioFolder, files{fileIndex});
@@ -42,8 +43,15 @@ bpB = cell(1, N);
 bpA = cell(1, N);
 
 for k = 1:N
-    Wn = bandEdges(k:k+1) / (targetFs/2);
-    [bpB{k}, bpA{k}] = butter(bpPrototypeOrder, Wn, 'bandpass');
+    if k == N
+        % Channel 8 extends to Nyquist: highpass instead of bandpass.
+        Wn = bandEdges(k) / (targetFs/2);
+        [bpB{k}, bpA{k}] = butter(2*bpPrototypeOrder, Wn, 'high');
+    else
+        % Channels 1-7: fourth-order Butterworth bandpass filters.
+        Wn = bandEdges(k:k+1) / (targetFs/2);
+        [bpB{k}, bpA{k}] = butter(bpPrototypeOrder, Wn, 'bandpass');
+    end
 end
 
 % Design the Task 8 lowpass once for all channels and recordings.
@@ -56,10 +64,8 @@ for fileIndex = 1:numel(files)
     [x, originalFs] = audioread(filename);
     x = sum(x, 2);  % Sum stereo channels, as in Phase 1.
 
-    if originalFs <= 2*maxFreq
-        warning(['%s was recorded at %d Hz: its source Nyquist frequency ' ...
-            'is only %.0f Hz. Upsampling cannot restore missing ' ...
-            'high-frequency content.'], filename, originalFs, originalFs/2);
+    if originalFs < targetFs
+        warning('%s was recorded below 16 kHz; resampling cannot restore missing frequencies.', filename);
     end
     if originalFs ~= targetFs
         x = resample(x, targetFs, originalFs);
@@ -85,7 +91,11 @@ for fileIndex = 1:numel(files)
         subplot(2, 1, channelIndex);
         plot(t(plotSamples), bandpassed(plotSamples, k)); grid on;
         xlabel('Time (s)'); ylabel('Amplitude');
-        title(sprintf('Channel %d (%.1f - %.1f Hz)', k, bandEdges(k), bandEdges(k+1)));
+        if k == N
+            title(sprintf('Channel %d: highpass above %.1f Hz (to Nyquist)', k, bandEdges(k)));
+        else
+            title(sprintf('Channel %d (%.1f - %.1f Hz)', k, bandEdges(k), bandEdges(k+1)));
+        end
     end
     sgtitle(sprintf('Task 6: bandpass outputs | %s', strrep(baseName, '_', ' ')));
 
@@ -112,7 +122,11 @@ for fileIndex = 1:numel(files)
         plot(t(envelopeSamples), rectified(envelopeSamples, k), 'Color', [0.70, 0.70, 0.70]); hold on;
         plot(t(envelopeSamples), envelopes(envelopeSamples, k), 'b', 'LineWidth', 1.5); hold off;
         grid on; xlabel('Time (s)'); ylabel('Amplitude');
-        title(sprintf('Channel %d envelope (%.1f - %.1f Hz)', k, bandEdges(k), bandEdges(k+1)));
+        if k == N
+            title(sprintf('Channel %d highpass envelope (above %.1f Hz)', k, bandEdges(k)));
+        else
+            title(sprintf('Channel %d envelope (%.1f - %.1f Hz)', k, bandEdges(k), bandEdges(k+1)));
+        end
         legend('Rectified', sprintf('%g Hz lowpass output', envelopeCutoff), 'Location', 'best');
     end
     sgtitle(sprintf('Task 9: extracted envelopes | %s', strrep(baseName, '_', ' ')));
@@ -130,7 +144,7 @@ end
 hold off; grid on;
 xlim([0, maxFreq]); ylim([-80, 5]);
 xlabel('Frequency (Hz)'); ylabel('Magnitude (dB)');
-title(sprintf('Phase 2: %d-channel Butterworth bandpass filter bank', N));
+title(sprintf('Phase 2: %d-channel Butterworth bank (7 bandpass + 1 highpass)', N));
 legend(compose('Ch %d', 1:N), 'Location', 'best');
 
 [Hlp, flp] = freqz(lpB, lpA, 8192, targetFs);
