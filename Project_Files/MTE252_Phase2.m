@@ -153,5 +153,3 @@ plot(flp, 20*log10(max(abs(Hlp), 1e-10)), 'LineWidth', 1.3);
 grid on; xlim([0, 2000]); ylim([-80, 5]);
 xlabel('Frequency (Hz)'); ylabel('Magnitude (dB)');
 title(sprintf('Phase 2: %g Hz Butterworth envelope lowpass filter', envelopeCutoff));
-
-fprintf('\nCompleted Phase 2 processing. Figures are open for viewing.\n');
